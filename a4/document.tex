@@ -1,0 +1,152 @@
+% -*- compile-command: "latexmk -pdf document.tex" -*-
+\documentclass{article}
+
+\author{Sam Price}
+\title{Math 452: Assignment 4}
+
+\newif\ifprinted%
+\printedtrue%
+\input{preamble}
+
+\begin{document}
+
+\maketitle
+
+\begin{enumerate}[start=0,label={RELABEL}]
+  \item[14.8\rparen] Explain why $\QQ$ is not cyclic.
+
+        The rationals are not cyclic because there is no $p/q$ such that for \emph{every} $s/t$ there is an integer $k$ so that $kp/q = s/t$.
+        For instance, since we take $(p, q)$ to be coprime, simply take $(p, q^{2})$. If $q = 1$, then of course an integer may not generate all rationals.
+
+  \item[14.15\rparen] Find all generators of $\ZZ_{3} \times \ZZ_{4}$.
+
+        The generators are
+        \[ (1, 2), (2, 1), (1, 3), (2, 3). \]
+
+  \item[\textbf{14.21}\rparen] Let $H \le G$ and $g \in G$ fixed.
+        Prove that if $G$ is cyclic, then the conjugate of $H$ w.r.t. $g$ is cyclic.
+
+        \begin{proof}
+          Since $gHg\inv$ is a subgroup of $G$ and $G$ itself is cyclic,
+          we know $gHg\inv$ must be cyclic as well.
+        \end{proof}
+
+  \item[16.12\rparen] Let $G$ be a group and fix $g \in G$.
+        Define $\lambda \from G \to G$ so that $\lambda(a) = gag\inv$. Prove $\lambda$ is an isomorphism.
+
+        \begin{proof}
+          Note that $\lambda(ab) = gabg\inv = ga (gg\inv) bg = \lambda(a)\lambda(b)$.
+          Since $\lambda$ is a homomorphism, we need only show that $\ker \lambda$ is trivial now,
+          as then $\lambda$ would be injective and so surjective.
+          Suppose there is some $a \in G$ so that $\lambda(a) = e$.
+          Then, $gag\inv = e$ which implies that $ga = g$ and so $a = e$.
+        \end{proof}
+
+  \item[\textbf{16.16}\rparen] Determine if each pair of groups is isomorphic.
+
+        \begin{lemma}{}{zn-zm-iso-cyc}
+          Let $A, B$ be cyclic groups of order $m, n$ respectively.
+          Then, $A \times B$ is cyclic if and only if $\gcd(m, n) = 1$.
+        \end{lemma}
+        \begin{proof}
+          ($\impliedby$)
+          Suppose $\gcd(m, n) = 1$ and $a, b$ be generators of $A$ and $B$ respectively.
+          $A \times B$ is cyclic only if there is an element of order $mn$ within it.
+          We claim that $(a, b)$ is such an element.
+          Clearly, its order is some divisor of $mn$, that much is clear by simple inspection.
+          Suppose its order is $k < mn$. This means that $a^{k} = b^{k} = e$,
+          but then $m \mid k$ and $n \mid k$ which is a contradiction as $\lcm(m, n) = mn$.% Comment for footnote spacing
+          \footnote{Yes, I get the abuse of notation here by not distinguishing between $e_{A}, e_{B}$ and $e_{A \times B}$.}
+          Hence, $(a, b)$ has order $mn$ and so $A \times B$ is cyclic.
+
+          ($\implies$)
+          Suppose now $\gcd(m, n) > 1$. Let $a^{k}, b^{j}$ be any elements of $A, B$ for generators $a, b$.
+          Thus $\lcm(m, n) < mn$ and so
+          \[ \pars{a^{k}, b^{j}}^{\lcm(m, n)} = e. \]
+          Since every element has order less than $mn$, $A \times B$ is not cyclic.
+        \end{proof}
+
+
+        \begin{enumerate}[start=1,label={(\alph*)}]
+          \item Yes.
+
+          \item No.
+
+          \item No. First is not cyclic, second one is.
+        \end{enumerate}
+
+        Addendum: The reason behind the one-word answers is that if $A$ and $B$ are both cyclic groups, and $\abs{A} = \abs{B}$,
+        then it is trivial to show that $A \iso B$.
+        Sketch: Send generator powers to each other.
+
+\newpage% Formatting
+
+  \item[16.19\rparen] Let $\theta \from \ZZ_{12} \to \ZZ_{12}$ defined by $n \mapsto 4n$.
+
+        \begin{itemize}
+          \item Verify $\theta$ is operation-preserving.
+
+                Let $a, b \in \ZZ_{12}$. Then,
+                \[ \theta(a + b) = 4(a + b) = 4a + 4b = \theta(a) + \theta(b). \]
+
+          \item Is $\theta$ an isomorphism?
+
+                No, as $\ker \theta$ is nontrivial. Note $3 \in \ker \theta$, which is enough.
+        \end{itemize}
+
+
+  \item[17.6\rparen] Let $f \from \ZZ_{15} \to \ZZ_{20}$ be defined by $n \mapsto 4n$. Show $f$ is a homomorphism.
+
+        Firstly, $f(0) = 0$. Let $a, b \in \ZZ_{15}$.
+        We find that $f(a + b) = 4(a + b) = 4a + 4b = f(a) + f(b)$.
+        We don't bother checking if they are equal when crossing modulo-indices since we can take equivalence classes and addition is fine across those.
+        That is, $[a + b] = [a] + [b]$.
+
+  \item[17.7\rparen] For the same $f$ as in the previous question:
+
+        \begin{enumerate}[start=1,label={(\alph*)}]
+          \item Find $\ord(7)$ and $\ord(f(7))$.
+
+                Easily $\ord(7) = 15$ since they are coprime.
+                Then, we know $\ord(f(7)) \mid 15$.
+                In fact, we know with this specific $f$ every order of $f(n)$ must divide 5. So, since it is not in $\ker f$, it is 5 exactly.
+
+          \item Same for 6.
+
+                Order 5 for both. See reasoning for the latter above.
+
+          \item Run it back for 10.
+
+                $\ord(10) = 3$ and has order 0 under $f$ since it is in the kernel of $f$.
+
+          \item Is this surprising? Explain.
+
+                Not really. The $n \mapsto 4n$ map really trivializes it as either the order of something under $f$ is 0 (when $a \in \ker f$)
+                or must be 5 itself since $20/4 = 5$ is prime.
+        \end{enumerate}
+
+
+  \item[17.10\rparen] Consider $\lambda \from U_{13} \to U_{13}$ given by $a \mapsto a^{3}$.
+
+        \begin{enumerate}[start=1,label={(\alph*)}]
+          \item How are 2 and 7 related in the domain of $U_{13}$?
+
+                They are related by the fact $7 \cdot 2 = 1$.
+
+          \item Their images?
+
+                In this case $\lambda(7) \lambda(2) = 7^{3}2^{3} = 1 = \lambda(2 \cdot 7)$.
+
+          \item Repeat for elements $4, 10 \in U_{13}$.
+
+                We see $4 \cdot 10 = 1$. Their images hold that $\lambda(4)\lambda(10) = 4^{3}10^{3} = 1 = \lambda(4 \cdot 10)$.
+
+          \item Is this surprising? Explain.
+
+                No, since homomorphisms must preserve inverses and group operations.
+        \end{enumerate}
+
+\end{enumerate}
+
+
+\end{document}

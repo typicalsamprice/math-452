@@ -1,0 +1,201 @@
+% -*- compile-command: "latexmk -pdf document.tex" -*-
+\documentclass{article}
+
+\newif\ifprinted%
+\printedtrue%
+\input{template}
+\togglefalse{paper}
+
+\usepackage{nameref}
+
+\input{theoremboxes}
+
+\author{Sam Price (Corrected Version)}
+\date{}
+\title{Math 452: Assignment 3}
+
+\begin{document}
+
+\maketitle
+
+\begin{enumerate}
+  \item[11.7\rparen] Give all subgroups of $(\bbZ_{12}, +)$.
+        \begin{itemize}
+          \item $\bbZ_{12}$ itself.
+          \item $\set{0, 2, 4, 6, 8, 10}$.
+          \item $\set{0, 3, 6, 9}$.
+          \item $\set{0, 4, 8}$.
+          \item $\set{0, 6}$.
+          \item $\set{0}$.
+        \end{itemize}
+  \item[11.15\rparen] Let $H = \set{\alpha \in U_{20} \mid \exists g \in U_{20}, \alpha = g^{2} }$.
+        \begin{enumerate}
+          \item $H = \set{1, 9} = \set{1, 3, 7, 9, 11, 13, 17, 19}^{2}$.
+          \item By inspection, it is closed and associative.
+                Further, each is self-inverse.
+                Thus, $H$ is a subgroup of $U_{20}$.
+        \end{enumerate}
+
+  \item[11.16\rparen] Suppose now $H$ is identically defined over any abelian group $G$.
+        Show $H \le G$.
+        \begin{proof}
+          Let $H$ defined as above, and $h \in H$.
+          Because $h = g^{2}$ for some $g \in G$,
+          we also know that $h\inv = (g^{2})\inv = \pars{g\inv}^{2}$ and so $h\inv \in H$ as well.
+          The operation on $H$ is also associative (by definition). Now let $g, h \in H$.
+          This means there exist $g', h' \in G$ so that
+          \[ (g'^{2}h'^{2}) = \pars{g'h'}^{2} = gh \]
+          and so $gh \in H$ as well since $G$ is abelian.
+          So, $H \le G$.
+        \end{proof}
+
+  \item[11.24\rparen] Let $H, K$ be subgroups of abelian group $G$.
+        Define $HK = \set{ hk \mid (h, k) \in H \times K }$.
+        Prove that $HK \le G$.
+        \begin{proof}
+          For any $h, k$ in their respective subgroups we
+          know there exists $h\inv k\inv \in HK$, but since $G$ is abelian this is equal
+          to $k\inv h\inv = (hk)\inv$, and so inverses exist in $HK$.
+          The operation inherits the identity element and associativity,
+          and so we now only need to show closure in $HK$.
+          Let $u = hk, v = jl$ be elements of $HK$ and their natural decompositions.
+          Then, $uv = hkjl = hjkl$ by commutativity of the operation.
+          Thus, we know $hj \in H$ and $kl \in K$ by virtue of them being subgroups of $G$.
+          Thus, $hjkl \in HK$ and $HK$ is a subgroup of $G$.
+        \end{proof}
+
+  \item[12.10\rparen] Let $g \in G$ with $\ord(g) = 6$.
+        \begin{itemize}
+          \item Is $g^{20} = g^{32}$? Why or why not?
+
+                Yes, since $20 \equiv 32 \pmod{\ord(g)}$.
+
+          \item Is $g^{123,405} = g^{123,465}$?
+
+                Yes, same reason as above. Their difference is 60.
+
+          \item For exponents 800 and 862 they are not equal since $62 \not\equiv 0 \pmod{6}$.
+
+          \item For exponents $-241$ and 359, they are equal since their difference is 600 which
+                is \emph{clearly} divisible by six.
+
+          \item What's going on?
+
+                For $g \in G$, we have for $k, l \in \bbZ$ that $g^{k} = g^{l} \iff k \equiv l \pmod{\ord(g)}$.
+                This is because $l = k + z\ord(g)$ implies $g^{k} = g^{k}g^{z\ord(g)} = g^{k + z\ord(g)} = g^{l}$.
+                The other direction is also true since if $k \not\equiv l$ we lose equality since reducing modulo $\ord(g)$
+                we have without loss of generality $k < l < \ord(g)$.
+                However, if $g^{k} = g^{l}$ then this in fact means $g^{l - k} = e$ which contradicts $l < \ord(g)$.
+        \end{itemize}
+
+  \item[12.17\rparen] Let $G$ be an abelian group and $a, b \in G$.
+        Prove that if $\ord(a)$ and $\ord(b)$ are finite, then $\ord(ab)$ is finite.
+
+        \begin{proof}
+          Let $a, b \in G$ for an abelian group $G$ with $m = \ord(a)$ and $n = \ord(b)$ finite.
+          Consider now the element $\pars{ab}^{mn}$.
+          We note that since $G$ is abelian, this is equal to $a^{mn}b^{mn}$.
+          However, we may rearrange further and so
+          \begin{align*}
+            a^{mn}b^{mn} &= \pars{a^{m}}^{n}\pars{b^{n}}^{m}\\
+            &= e^{n}e^{m} = e.
+          \end{align*}
+
+          This implies that $\ord(ab) \mid mn$, and so must be finite.
+        \end{proof}
+
+  \item[12.23\rparen] Show that for any $H \le G$, if $g \in G$ is fixed then the set
+        \[ gHg\inv = \set{ ghg\inv \mid h \in H } \]
+        is a subgroup of $G$.
+        This is also called the \emph{conjugate} of $H$ with respect to $g$.
+        \begin{proof}
+          Fix $g \in G$ and let $H$ be some subgroup of $G$.
+          Denote $J = gHg\inv$.
+          Clearly the associativity of the operation is preserved within $J$ since that is inherited.
+          Further, if $a = ghg\inv$ and $b = gh\inv g\inv$, then $ab = ghg\inv g h\inv g\inv$
+          which reduces down to the identity. Thus, $J$ has inverses as well.
+          The identity is inside $J$ as well, since $e \in H$ by definition of a subgroup.
+          Now we need only show closure to show $J \le G$.
+          Consider $a, b \in J$ such that their $H$-parts are $j, k \in H$.
+          Then, we note that
+          \begin{align*}
+            ab &= (gjg\inv)(gkg\inv)\\
+            &= gj(g\inv g)kg\inv\\
+            &= gjkg\inv.
+          \end{align*}
+          However, since $j, k \in H$ and $H$ is a subgroup, we know that $jk \in H$ as well.
+          Thus, $ab = gjkg\inv$ is an element of $J$ and thus $J$ is a subgroup of $G$.
+        \end{proof}
+
+  \item[13.9\rparen] Find the elements of $U_{16}$ and verify that $U_{16}$ is not cyclic.
+
+        We know that (forgetfully?) $U_{16} = \set{1, 3, 5, 7, 9, 11, 13, 15}$.
+        Then, trying each one by one, we note that they cannot be generators of $U_{16}$.
+        Specifically, we note that:
+        \begin{itemize}
+          \item $\generator{1} = \set{1}$.
+          \item $\generator{3} = \set{3, 9, 11, 1}$.
+          \item $\generator{5} = \set{5, 9, 13, 1}$.
+          \item $\generator{7} = \set{7, 1}$.
+          \item $\generator{9} = \set{9, 1}$.
+          \item $\generator{11} = \set{11, 9, 3, 1}$.
+          \item $\generator{13} = \set{13, 9, 5, 1}$.
+          \item $\generator{15} = \set{15, 1}$.
+        \end{itemize}
+
+  \item[13.12\rparen] Consider the additive group $\bbZ_{12}$.
+        We've seen that $\bbZ_{12} = \generator{1}$.
+        \begin{enumerate}[start=1,label={\lparen\alph*\rparen}]
+          \item Compute $\generator{m}$ for all other $m \in \bbZ_{12}$.
+                \begin{itemize}
+                  \item $\generator{0} = \set{0}$.
+                  \item $\generator{2} = \set{0, 2, 4, 6, 8, 10}$.
+                  \item $\generator{3} = \set{0, 3, 6, 9}$.
+                  \item $\generator{4} = \set{0, 4, 8}$.
+                  \item $\generator{5} = \bbZ_{12}$.
+                  \item $\generator{6} = \set{0, 6}$.
+                  \item $\generator{7} = \bbZ_{12}$.
+                  \item $\generator{8} = \generator{4}$.
+                  \item $\generator{9} = \generator{3}$.
+                  \item $\generator{10} = \generator{2}$.
+                  \item $\generator{11} = \bbZ_{12}$.
+                \end{itemize}
+          \item Verify each is a subgroup of $\bbZ_{12}$.
+
+                Each must be closed by inspection \textbf{or} some algebra.
+                The rest is trivial
+                (i.e., every single one has the identity and must be associative)
+
+          \item How many \emph{distinct} subgroups are there?
+
+                Six total.
+                This might have to do with the fact that $\phi(12) = 4$ and thus counting
+                the number of \emph{proper non-trivial subgroups} of $\bbZ_{12}$.
+                That is conjecture however.
+
+          \item Are there non-cyclic subgroups of $\bbZ_{12}$? Why or why not.
+
+                No, there are not. Suppose such a subgroup $K$ existed.
+                Note that if $a \in K$, then $\generator{a} \subset K$.
+                This means that $K$ must be some union of cyclic groups.
+                Note that if $K = \set{0}$ then it is generated by zero still.
+
+                \textbf{Case 1}: Suppose $a, b \in K$ exist so that $\gcd(a, b) = 1$.
+                If $a$ or $b$ is zero, then the other is 1 and $K = \bbZ_{12}$ is cyclic.
+                Otherwise, by B\'ezout, there exist integers $x, y$ so that $ax + by = 1$,
+                and so $1 \in K$, and we reach the same contradiction as before.
+
+                \textbf{Case 2}: If there are no such $a, b$ so that $\gcd(a, b) = 1$, then
+                there must be some \emph{common} $\gcd > 1$, which we will call $c$.
+                We claim then that $K = \generator{c}$.
+		By B\'ezout, there are integers $x, y$ so that $ax + by = c$ and so $c \in K \implies \generator{c} \subset K$.
+                Now, let $a \in K$, and suppose that $a \notin \generator{c}$.
+                Then, $a \ne ck$ for \emph{any} $k \in \bbZ$ and $c \nmid a$.
+		But this is a contradiction to the fact that $c \mid a$ for \emph{every} $a \in K$.
+                Thus, $K = \generator{c}$ and is cyclic.
+        \end{enumerate}
+
+\end{enumerate}
+
+
+\end{document}

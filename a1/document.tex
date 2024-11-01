@@ -1,0 +1,163 @@
+% -*- compile-command: "latexmk -pdf document.tex" -*-
+\documentclass{article}
+
+\input{template}
+\togglefalse{paper}
+
+\input{theoremboxes}
+
+\author{Sam Price}
+\date{}
+\title{Math 452: Assignment 1}
+
+\begin{document}
+
+\maketitle
+
+\begin{enumerate}
+\item[3.3\rparen] Show that for positive integers $n, m$ if $n \mid m$ and $m \mid n$ then $m = n$.
+        \begin{proof}
+          Let $a, b \in \bbN$ such that $a \mid b$ and $b \mid a$.
+          Then, there are some (positive) integers $j, k$ such that $a = bj$ and $b = ak$.
+          This then means that $a = akj$ which implies $kj = 1$.
+          The only two positive integers that multiply to 1 is $j = k = 1$.
+          Thus, $a = b$.
+        \end{proof}
+
+  \item[3.15\rparen] Find all solutions to $7x + 10y = 1$, and prove there are no others.
+
+        \begin{proof}
+          Every solution to this equation in $\ZZ[2]$ looks like (for $n \in \bbZ$)
+          \[ \pars*{n, \frac{1 - 7n}{10}} \]
+          for $n = 10k + 3$, $k \in \bbZ$.
+          Suppose some new solution $(x', y')$ exists with $x' \not\equiv 3 \pmod{10}$.
+          Clearly, $y' = (1 - 7x')/10$ by solving for $y'$.
+          However, if $x' \ne 10k' + 3$ for any $k' \in \bbZ$ there is the issue then that
+          $7x' \equiv 1 \iff x' \equiv 3$ modulo 10, which is \emph{opposite} of our creation of $x'$.
+          Thus, no other solutions exist.
+        \end{proof}
+
+  \item[3.19\rparen] Let $a, b, c \in \bbZ$. If $\gcd(a, b) = 1$ and $c \mid a$, then $\gcd(b, c) = 1$.
+        \begin{proof}
+          Let $a, b, c \in \bbZ$ as above.
+          Suppose $\gcd(c, b) = k > 1$.
+          Then, $k \mid c$ and $k \mid b$. However, $c \mid a \implies k \mid a$.
+          Since $k \mid a$ and $k \mid b$, we know $\gcd(a, b) \ge k > 1$, but this is false
+          and so the claim is shown.
+        \end{proof}
+
+  \item[4.7\rparen] For each $a \in \bbZ_{13}$ find $a\inv$ or explain why one does not exist.
+
+        Every nonzero $a$ has an inverse. Note that $(a\inv)\inv = a$. There is:
+        \[
+        (1, \ldots, 12) \mapsto (1, 7, 9, 10, 8, 11, 2, 5, 3, 4, 6, 12).
+        \]
+        For any prime $p$, the element $(p - 1) \in \bbZ_{p}$ is its own inverse.
+        In addition, $\pars{p - k}^{2} \equiv k^{2}$ for $1 \le k < p$.
+
+  \item[4.11\rparen]
+        \begin{itemize}
+          \item Verify that $\ord(2 \in \bbZ_{7}) = 3$. See that $2^{3} = 8 = 7 + 1$.
+
+          \item Find the order of all elements in $U_{7}$.
+
+                This is simply $(1, \ldots, 6) \mapsto (1, 3, 6, 3, 6, 2)$.
+          \item Same process for $U_{10}$.
+
+                This is $(1, 3, 7, 9) \mapsto (1, 4, 4, 2)$.
+
+          \item Do it again for $U_{15}$. I am so tired but here is the list nonetheless:
+                \begin{align*}
+                  1 \to 1 &\quad 2 \to 4\\
+                  4 \to 2 &\quad 7 \to 4\\
+                  8 \to 4 &\quad 11 \to 2\\
+                  13 \to 4 &\quad 14 \to 2
+                \end{align*}
+
+          \item Any conjectures?
+
+                Yes, working in $U_{m}$ so that $\ord(\indet)$ is finite.
+                If $a = m - 1$ (for $m > 2$) then $\ord(a) = 2$, which isn't particularly shocking.
+                Perhaps even $\gcd(\ord(a), m) = 1$?
+
+                \textbf{Update} The real property is that $\ord(a) \mid \abs{U_{m}}$.
+                However, this does in fact imply my conjecture.
+                \begin{proof}
+                  Let $a \in U_{m}$. Thus, $A = \ord(a) \mid U_{m} = \phi(m)$ and suppose that $A \mid m$.
+                  Recall that
+                  \[ \phi(m) = \prod_{m_{i} \mid m}m_{i}^{k_{i} - 1}(m_{i} - 1). \]
+                \end{proof}
+        \end{itemize}
+
+  \item[4.17\rparen] Show that $U_{m}$ is closed under multiplication.
+
+        This is more general in that $U$ can be the group of units of some ring $R$ (or $U = R^{\times}$ subgroup).
+        Take these as $U_{m}, \bbZ_{m}$ here.
+        \begin{proof}
+          Let $a, b \in U$. Suppose that $ab = c \notin U$. Then, let $d = b\inv a\inv$.
+          Clearly, $d = c^{-1}$ because $cd = (a b) (b\inv a\inv) = 1$.
+          This contradicts the fact $c \notin U$ however, as $c^{-1} \in R$ exists.
+        \end{proof}
+        \textbf{Update: False, as I assumed $U \subseteq R$ was part of a ring, but we make no such assumptions originally and so zero divisors may exist.
+        In fact, even if $R$ is a ring and $U$ is a subring, this still would not be enough as zero divisors may exist inside of rings.}
+
+  \item[5.5\rparen] Fix $h \in D_{4}$ and let $C(h)$ be the centralizer of $h$.
+        Verify that $r_{270}, d, d'$ are not contained in $C(h)$.
+
+        This can be verified by looking at the table on page 44.
+        The row of $h$ does not match the column.
+
+  \item[5.7\rparen] The \emph{center} of $D_{4}$ is the set
+        \[ Z(D_{4}) = \set*{ \sig \in D_{4} \mid \sig \tau = \tau \sig \text{ for all } \tau \in D_{4} }. \]
+
+        \begin{itemize}
+          \item The center differs from the centralizer in that
+                \[ Z(G) = \cap_{g \in G} C(g). \]
+                From the table, it's every element that has the same row and column.
+                The intersection definition comes from the fact that the center is every
+                element that commutes with \emph{all} of $G$.
+                If $C(g) \ne G$, then $g \notin Z(G)$.
+                As such, if $C(g) = G$, then $g' \in G$ also has $g \in C(g')$ and thus $g \in Z(G)$.
+
+          \item $Z(D_{4}) = \set{\eps, r_{180}}$.
+          \item Because $r_{180} \in Z(D_{4})$, we have $C(r_{180}) = D_{4}$.
+          \item Look at the definition of the \emph{center}.
+                An element $\sig \in Z(G)$ if and only if $C(\sig) = G$.
+        \end{itemize}
+
+  \item[5.9\rparen] For $n \ge 3$, let $D_{n}$ be the dihedral group of order $2n$.
+        \begin{itemize}
+          \item Describe the elements of $D_{n}$. How many are there?
+
+                As spoiled above, there are $2n$ elements. Explicated, it is:
+                \begin{itemize}
+                  \item[(+1)] $\eps \in D_{n}$ by virtue of it being a group.
+                  \item[(+ $n-1$)] $r_{k} \in D_{n}$ for $1 \le k < n$.
+                        These correspond to turning $2\pi k/n$ radians about the center.
+                        One could have $n$ elements here instead, with $r_{0} = r_{n} = \eps$.
+                        Choice of using 0 or $n$ is really decided when showing composition is related to
+                        addition of indices in $\inmod{n}$.
+                  \item[(+ $n$)] $f_{k} \in D_{n}$ for $1 \le k \le n$.
+                        These are flips (hence $f$, I couldn't decide a good notation) about the $n$
+                        axes of symmetry on the (regular) $n$-gon.
+                \end{itemize}
+                These do in fact total to $2n$ elements.
+
+          \item Describe why $D_{n}$ is non-abelian.
+
+                The dihedral groups are noncommutative because in some (intuitive) sense
+                we are breaking away from the 2-dimensional space these polygons live in
+                by rotating them around an axis that exists \emph{within} said space.
+                If we restrict to the subgroup of rotations this is avoided by staying planar:
+                similar to how the group that defines Rubik's cube face rotations is nonabelian.
+
+                In a more concrete sense, for some $j, k$ we have that $r_{j} \circ f_{k} \ne f_{k} \circ r_{j}$.
+                A flip sometimes has fixed point(s) (considering vertices) and a rotation always has zero.
+                This results in different vertices being \emph{fixed} and so the ``ordering'' that
+                is preserved turns out different during the rotation.
+        \end{itemize}
+\end{enumerate}
+
+\textbf{Score: 29.5/30}
+
+\end{document}

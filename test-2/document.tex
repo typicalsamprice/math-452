@@ -1,0 +1,214 @@
+% -*- compile-command: "latexmk -pdf document.tex" -*-
+\documentclass{article}
+
+\author{Sam Price}
+\title{MATH 452: Test 2}
+
+\newif\ifprinted%
+\printedtrue%
+\input{preamble}
+
+\begin{document}
+
+\maketitle
+
+\begin{enumerate}[start=1,label={(\arabic*)}]
+  \item Choose \underline{two} to solve.
+
+        \begin{enumerate}[start=1,label={(\alph*)}]
+          \item Suppose that $\ord(g) = n$.
+                Find the necessary and sufficient condition on $r, s \in \ZZ$ so that $\angles{g^{r}} \subset \angles{g^{s}}$.
+
+                \begin{proposition}{}{}
+                  If $g \in G$ has order $n$, then $\angles{g^{r}} \subset \angles{g^{s}}$ for integers $r, s$ if and only if $r \equiv sp \pmod{n}$ for some $1 \le p < n$.
+                \end{proposition}
+                \begin{proof}
+                  ($\impliedby$)
+                  Let $r, s$ so that $n \mid (r - sk)$ for some integer $1 \le k < n$.
+                  Then, $g^{r - sk} = e$ which implies that $g^{r} = g^{sk}$. Since $g^{r} \in \angles{g^{s}}$, the proposition follows.
+
+                  ($\implies$)
+                  Suppose we have such $r, s$ so that $\angles{g^{r}} \subset \angles{g^{s}}$.
+                  Then, there is some $1 \le k < n$ so that $g^{r} = g^{sk}$.
+                  Hence, it follows that $g^{r - sk} = e$ and thus $n \mid (r - sk)$.
+                \end{proof}
+
+
+          \item Let $H \le G$ and $\ord(g) = n$.
+                \textbf{Prove}: If $g^{m} \in H$ and $m, n$ are coprime, then $g \in H$.
+
+                \begin{proof}
+                  Consider $\angles{g^{m}}$. Note that
+                  \[ \abs{\angles{g^{m}}} = \frac{\ord(g)}{\gcd(m, n)}. \]
+                  Since $\gcd(n, m) = 1$, we in fact have that $\abs{\angles{g^{m}}} = n$.
+                  For this to be the case, it follows that $g \in H$, as $H$ must include all $n$ powers of $g$.
+                \end{proof}
+
+          \item Find all generators of $\ZZ$. Let $a$ be a group element that has infinite order.
+                Find all generators of $\angles{a}$.
+
+                All the generators of $\ZZ$ are $\set{1, -1}$.
+                This is because $k\ZZ$ for $\abs{k} \ne 1$ we don't have 1 at all.
+
+                Now let $a \in \ZZ$. The generators of $\angles{a}$ are precisely $\set{a, -a}$.
+                This is because if $\abs{c} \ne \abs{a}$, we either have $c \mid a$ or $a \notin \angles{c}$.
+                If $c \mid a$, then we in fact get a LARGER set than just $\angles{a}$, as $c \notin \angles{a}$.
+
+        \end{enumerate}
+
+  \item Choose \underline{two} to solve:
+
+        \begin{enumerate}[start=1,label={(\alph*)}]
+          \item Suppose that $\abs{G} = 24$ and that $G$ is cyclic.
+                Let $a \in G$. If $a^{8} \ne e$ and $a^{12} \ne e$, show that $\angles{a} = G$.
+
+                \begin{proof}
+                  Suppose $\ord(a) < 24$ (this is equivalent).
+                  This requires that $\ord(a) \mid 24$ and so $\ord(a) \in \set{1, 2, 3, 4, 6, 8, 12}$.
+                  We know it is not one of $1, 8, 12$ by inspecting the given constraints.
+                  The others are also impossible as $8, 12$ are multiples of them, and so also may not be identities.
+                  Thus, $\ord(a) = 24$ and $a$ generates $G$.
+                \end{proof}
+
+          \item List all subgroups of $\ZZ_{30}$.
+
+                \begin{itemize}
+                  \item $\set{0}$.
+                  \item $\set{0, 15}$.
+                  \item $\set{0, 10, 20}$.
+                  \item $\set{0, 5, 10, 15, 20, 25}$.
+                  \item $\set{0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28}$.
+                  \item $\set{0, 3, 6, 9, 12, 15, 18, 21, 24, 27}$.
+                  \item $\set{0, 6, 12, 18, 24}$.
+                  \item $\ZZ_{30}$.
+                \end{itemize}
+
+          \item List the cyclic subgroups of $U_{30} = \set{1, 7, 11, 13, 17, 19, 23, 29}$.
+
+                \begin{itemize}
+                  \item $\set{1}$.
+                  \item $\set{1, 29}$.
+                  \item $\set{1, 11}$.
+                  \item $\set{1, 7, 13, 19}$.
+                  \item $\set{1, 17, 19, 23}$.
+                \end{itemize}
+
+        \end{enumerate}
+
+  \item Choose \underline{one} to solve:
+
+        \begin{enumerate}[start=1,label={(\alph*)}]
+          \item Suppose $\phi \from G \isoto H$.
+                Prove that for $a, b \in G$, $a$ and $b$ commute if and only if $\phi(a)$ and $\phi(b)$ commute.
+
+                \begin{proof}
+                  ($\implies$)
+                  Let $a, b$ commute. Then, $\phi(a)\phi(b) = \phi(ab) = \phi(ba) = \phi(b)\phi(a)$.
+
+                  ($\impliedby$)
+                  Now, the opposite. We see $\phi(ab) = \phi(a)\phi(b) = \phi(b)\phi(a) = \phi(ba)$.
+                  This is possible since $\phi$ is necessarily bijective, and so we conclude $ab = ba$.
+                \end{proof}
+
+          \item Suppose $\phi \from G \isoto H$. Prove $G$ is cyclic if and only if $H$ is cyclic.
+
+                \begin{proof}
+                  ($G \implies H$)
+                  Let $g \in G$ be a generator. Since $\ord(g) = \abs{G} = \abs{H}$, then $\phi$ preserves this order. Therefore, $H = \angles{\phi(g)}$ is cyclic.
+
+                  ($H \implies G$)
+                  There was nothing special about starting with $G$.
+                  Since $\phi$ is an isomorphim, the same property holds in the opposite direction
+                  and so for a generator $h \in H$ we have $\ord(\phi\inv(h)) = \abs{H} = \abs{G}$ and thus $G = \angles{\phi\inv(h)}$ is cyclic.
+                \end{proof}
+
+        \end{enumerate}
+
+
+  \item Choose \underline{one} to solve:
+
+        \begin{enumerate}[start=1,label={(\alph*)}]
+          \item Show that $U_{8} \iso U_{12}$.
+
+                The isomorphism $\phi \from U_{8} \to U_{12}$ that sends $1 \to 1$, $3 \to 5$, $5 \to 7$ and $7 \to 11$ works perfectly fine.
+                This is because every element is still self-inverse, and $\phi(3 \cdot 5) = \phi(7) = 11$ and $35 \equiv 11 \pmod{12}$.
+                By inspection, the rest of the pairwise operations also works.
+
+          \item Show that $U_{8} \not\iso U_{10}$.
+
+                There is no element of order 4 in $U_{8}$.
+                Since isomorphisms preserve order, there is no valid $v \in U_{8}$ so that $i(v) = 3$.
+        \end{enumerate}
+
+  \item Textbook 17.9
+
+        Consider the homomorphism $\gamma \from \ZZ_{12} \to \ZZ_{18}$ given by $a \mapsto 6a$.
+
+        \begin{enumerate}[start=1,label={(\alph*)}]
+          \item How are 2 and 10 related in the domain? They are inverses.
+
+          \item How are they related in the image? They are still inverses. That is, $6(2) + 6(10) = 72 = 18 \cdot 4 = 0$.
+
+          \item Repeat for 4, 8. They are \emph{\underline{\textbf{still}}} inverses in both the domain and codomain.
+
+          \item Is this surprising?
+
+                No! It is a very trivial theorem that inverses are sent to inverses under homomorphisms.
+        \end{enumerate}
+
+
+  \item Textbook 18.13
+
+        Complete the proof of 18.7 by proving the first implication.
+
+        \begin{proposition}{}{}
+          For $\lambda \from G \to H$, if $\ker \lambda$ is trivial then $\lambda$ is injective.
+        \end{proposition}
+
+        Luckily I literally proved this in my notes like a month ago:
+
+        \begin{proof}
+          Suppose $\lambda$ has trivial kernel.
+          Let $a, b$ so that $\lambda(a) = \lambda(b)$.
+          Then, we have that $e = \lambda(b)\lambda(a)\inv$ and so $\lambda(b a\inv) = e$.
+          Therefore, $a\inv = b\inv$ and so $a = b$.
+        \end{proof}
+
+
+  \item Textbook 18.18
+
+        \begin{itemize}
+          \item Find all endomorphisms of $\ZZ_{18}$.
+
+                The easy ones are $a \mapsto ak$ for all integers $k$.
+
+                Nonlinear transformations cannot be homomorphisms since $T(a + b) = T(a) + T(b)$ is \emph{the definition}
+                of a linear transformation. It also cannot be affine since then the identity may not be preserved.
+
+          \item Find the automorphisms now.
+
+                For above, an endomorphism $f_{k}$ is an isomorphism if it is injective (surjectivity follows)
+                and so for $\gcd(k, 18) = 1$ we have $f_{k}(a) = f_{k}(b) \implies ka = kb$.
+                Through modular arithmetic we find then $18 \mid (ka - kb)$.
+                Since 18 is coprime to $k$, it follows (by Euclid or something) that $18 \mid (a - b)$ and so $a = b$ in $\ZZ_{18}$.
+
+                If the $k$ is not coprime to 18, then it is easy to find elements that are sent to the same spot in the image.
+        \end{itemize}
+
+
+  \item Textbook 19.22
+
+        \begin{proposition}{}{}
+          Let $H, K \le G$. If $aH \subset bK$ for some $a, b \in G$, then $H \subset K$.
+        \end{proposition}
+
+        \begin{proof}
+          Suppose $aH \subset bK$ for some $a, b \in G$.
+          Then, this means that $a \in bK$ and so $aH \subset aK$.
+          By left-multiplying by $a\inv$ we see that $H \subset K$.
+        \end{proof}
+
+\end{enumerate}
+
+
+\end{document}

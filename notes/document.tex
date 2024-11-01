@@ -1,0 +1,388 @@
+% -*- compile-command: "latexmk -pdf document.tex" -*-
+\documentclass{article}
+
+\author{Sam Price}
+\title{Abstract Algebra Notes}
+
+\newif\ifprinted%
+%\printedtrue%
+\input{preamble}
+
+\begin{document}
+
+\maketitle
+
+\section{Groups}
+
+\begin{definition}{Group}{group}
+  A group is a tuple $(G, \cdot)$ which is a set $G$ and a binary operation $\cdot$ such that
+  \begin{enumerate}[start=1,label={\arabic*\rparen}]
+    \item For any $a, b, c \in G$, the operation is associative so that $a \cdot (b \cdot c) = (a \cdot b) \cdot c$.
+    \item There is an element $e \in G$ such that for any $a \in G$, $e \cdot a = a \cdot e = a$.
+          This element $e$ is called the identity, oftentimes denoted 1.
+    \item For every $a \in G$, there is an element $b \in G$ such that $a \cdot b = b \cdot a = e$. We call $b$ the ``inverse of $a$'', denoted $a\inv$.
+    \item For every $a, b \in G$, there is some $c \in G$ so that $a \cdot b = c$.
+  \end{enumerate}
+
+  Oftentimes, the operation is dropped and we simply denote the group as $G$,
+  with the operation being usual multiplication (whether explicit or not.)
+\end{definition}
+
+One of the original groups discovered is that of the symmetries of a square.
+Those symmetries are your usual 90-degree rotations, as well as reflections about the four axes.
+This leads us to a group such that the 0-degree rotation is the identity element,
+and the operation linking elements is \emph{composition}, which is often the case for
+function-like elements in a group.
+
+\section{Symmetric Groups}
+
+\subsection{Involutions}
+
+An \emph{involution} is a function $f \from X \to X$ that is self-inverse.
+That is, $f(f(x)) = x$ for all $x \in X$.
+If $f(x) = x$, then clearly $f(f(x)) = x$.
+However if $f(x) = y$, then $f(f(x)) = f(y) = x$.
+This means that an involution is composed of \emph{transpositions} and \emph{fixed points}.
+Oftentimes, the latter is denoted $\Fix f$, which in general is defined as
+\[ \Fix f = \set{ x \in X \mid f(x) = x }. \]
+
+\begin{proposition}{Parity of Fixed Points}{involution-fixed-point-parity}
+  For an involution $f \from X \to X$, if $X$ is finite then
+  $\abs{\Fix f} \equiv \abs{X} \pmod{2}$.
+\end{proposition}
+
+An important involution to keep in mind is an involution $f \from G \to G$ for a group $G$.
+Obviously, the identity $\id[G]$ is an isomorphism, but so is $g \mapsto g\inv$.
+This is because $\pars{g\inv}\inv = g$ no matter what.
+
+\section{Cyclic Groups}
+
+\section{Homomorphisms}
+
+Two groups often look different, but have the same underlying structure.
+We can in some sense show that they are ``the same'' by creating an \emph{isomorphism}
+between these two groups. If there \emph{is} an isomorphism between two groups,
+we say they are \emph{isomorphic}.
+
+There is also the weaker notion of a \emph{homomorphism},
+for when one group ``looks like'' a subgroup of another.
+
+\begin{definition}{Homomorphism}{homomorphism}
+  A homomorphism between groups $G$ and $H$ is a function
+  $\varphi \from G \to H$ such that
+  \[ \varphi(a \cdot_{G} b) = \varphi(a) \cdot_{H} \varphi(b) \]
+  for all $a, b \in G$.
+\end{definition}
+
+This definition quickly shows that
+\begin{proposition}{Homomorphism Preserves Identity and Inverses}{homo-pres-ident-inv}
+  For a homomorphism $\varphi \from G \to H$, $\varphi(a\inv) = \varphi(a)\inv$ and $\varphi(e_{G}) = e_{H}$.
+\end{proposition}
+\begin{proof}
+  Let $\varphi \in \Hom(G, H)$ and $a \in G$. We see that
+  \[ e = \varphi(a)\inv \varphi(a) = \varphi(a)\inv \varphi(ae) = \varphi(a)\inv\varphi(a)\varphi(e) = \varphi(e). \]
+  Then, we also see
+  \[ e = \varphi(aa\inv) = \varphi(a)\varphi(a\inv) \quad \text{and} \quad \varphi(a)\varphi(a)\inv = e \]
+  which implies $\varphi(a\inv) = \varphi(a)\inv$.
+\end{proof}
+
+Two groups are \emph{isomorphic} if and only if there
+exists a \emph{bijective} homomorphism between them.
+If such an isomorphism exists between $G$ and $H$, we write that $G \iso H$.
+
+\begin{example}{Homomorphisms Are Not (Always) Isomorphisms}{}
+  Consider the groups $\ZZ_{2}$ and $\ZZ_{12}$.
+  Clearly, these cannot be \underline{isomorphic} since they are totally different sizes.
+  However, we notice that $\set{0, 6} \le \ZZ_{12}$ looks pretty close to $\ZZ_{2}$ itself.
+  Therefore, the homomorphism $f \from \ZZ_{2} \to \ZZ_{12}$ holds with $f(1) = 6$
+  (identity is forced).
+\end{example}
+
+\begin{example}{Homomorphisms Don't (Always) Play Nice}{}
+  In fact, we need not even have a homomorphism $f \from G \to H$ be \emph{injective}.
+  The simplest example for any nontrivial $G, H$ is actually the map sending every $g \in G$
+  to the identity $e \in H$. Clearly, this isn't injective, but it also is a valid homomorphism
+  since for $g, h \in G$ we get $\phi(gh) = e$, and $\phi(g)\phi(h) = e^{2} = e$.
+\end{example}
+
+
+\begin{example}{Isomorphism I}{}
+  Consider $(\RR, +)$ and $((0, \infty), \cdot)$.
+  Then, there exists a homomorphism $\gamma \from \RR \to (0, \infty)$ so that $x \mapsto e^{x}$.
+  This is clearly a homomorphism, since $\gamma(x + y) = e^{x + y} = e^{x}e^{y} = \gamma(x)\gamma(y)$.
+  Further, $\exp$ is well-known to be bijective and so this is indeed an \emph{isomorphism}.
+\end{example}
+
+\begin{theorem}{Isomorphisms Are Invertible}{iso-invertible}
+  For $\phi \from G \isoto H$, then $\phi\inv \from H \isoto G$ exists.
+  Further, $\phi\inv \circ \phi = \id[G]$ and $\phi \circ \phi\inv = \id[H]$.
+\end{theorem}
+
+\begin{proof}
+  Clearly, since $\phi$ is a bijection, $\phi\inv$ exists (as a function) and the composition
+  does in fact form the proper identity functions.
+  To show $\phi\inv$ preserves structure, let $h_{1},h_{2} \in H$.
+  Then, let $g_{1} = \phi\inv(h_{1})$ and similarly for $g_{2}$.
+  Since $\phi$ is an isomorphism, $\phi(g_{1}g_{2}) = \phi(g_{1})\phi(g_{2})$ which is equal to
+  \[ \phi(g_{1}g_{2}) = h_{1}h_{2}. \]
+  Which implies that $g_{1}g_{2} = \phi\inv(h_{1}h_{2})$ and so
+  \[ \phi\inv(h_{1})\phi\inv(h_{2}) = \phi\inv(h_{1}h_{2}). \qedhere \]
+\end{proof}
+
+\begin{theorem}{Isomorphic Groups Share Commutativity}{isomorphic-abelian}
+  If an abelian group $G$ is isomorphic to $H$, then $H$ is abelian.
+\end{theorem}
+\begin{proof}
+  Let $\phi \from G \to H$ be an isomorphism, and pick any $g, h \in H$.
+  Since $\phi$ is bijective, we can find unique elements $a, b$ so that
+  $\phi(a) = g$ and $\phi(b) = h$. Since $G$ is abelian, we can say that
+  $\phi(ab) = \phi(ba) \implies gh = hg$ and so $H$ is abelian.
+\end{proof}
+
+\begin{remark}
+  An isomorphism from a group $G$ to itself is called an \emph{automorphism},
+  and these automorphisms form a group denoted $\Aut(G)$.
+  Note that the identity $\id \from G \to G$ is the map $g \mapsto g$ is a valid automorphism,
+  as well as the inversion map $g \mapsto g\inv$. These might not always be different,
+  such as if every element is self-inverse.
+\end{remark}
+
+\begin{definition}{Other Types of Homomorphisms}{homo-types}
+  There are other types of ``special'' homomorphisms.
+  Given a homomorphism $\phi \from G \to H$:
+  \begin{itemize}
+    \item If $\phi$ is bijective, then $\phi$ is an \emph{isomorphism}.
+    \item If $\phi$ is injective, then $\phi$ is a \emph{monomorphism}.
+    \item If $\phi$ is surjective, then $\phi$ is a \emph{epimorphism}.
+          In category theory, there is a slightly different definition
+          of this word for morphisms.
+    \item If $G = H$, then $\phi$ is a \emph{endomorphism}.
+    \item If $G = H$ and $\phi$ is an isomorphism, then $\phi$
+          is an \emph{automorphism}.
+  \end{itemize}
+
+\end{definition}
+
+
+\begin{theorem}{}{}
+  Let $g$ be an element of a group with infinite order.
+  Define $\theta \from \ZZ \to \angles{g}$ with $k \mapsto g^{k}$. Then $\theta$ is an isomorphism.
+\end{theorem}
+
+\begin{example}{}{}
+  Consider $U_{12} = \set{1, 5, 7, 11}$
+  and $\ZZ_{2} \times \ZZ_{2} = \set{(0, 0), (0, 1), (1, 0), (1, 1)}$.
+  Then, $\phi \from U_{12} \to \ZZ_{2} \times \ZZ_{2}$ is an isomorphism for
+  $\phi(5) = (0, 1), \phi(7) = (1, 0)$ and the rest forced.
+\end{example}
+
+
+\begin{definition}{Kernel and Image}{kern-img}
+  The \emph{kernel} of a homomorphism $\theta \from G \to H$ is denoted $\ker \theta$, and is the set
+  \[ \ker\theta = \set{ a \in G \mid \theta(a) = e } \]
+  The \emph{image} of $\theta$ is denoted $\im \theta$ and is the set
+  \[ \im \theta = \theta(G) = \set{ a \in H \mid \theta\inv(a) \ne \emptyset } \]
+  where $\theta\inv(a)$ is the usual preimage.
+\end{definition}
+
+
+These ideas translate quite nicely to linear algebra, in fact where the set of linear
+transformations between vector space $V$ and $W$ (sometimes denoted $\mathcal{L}(V, W)$)
+\emph{are} the homomorphisms in the set $\Hom(V, W)$.
+In the linear algebra world, the kernel of an operator $T$ is often
+instead called the \emph{null space} of $T$.
+Such homomorphisms can be further specified as the general linear group, but that
+distinction isn't as important in this setting.
+
+\begin{proposition}{Image of Homomorphism is a Group}{homo-im-group}
+  For the homomorphism $\theta \from G \to H$, $\im \theta$ is a subgroup of $H$.
+\end{proposition}
+\begin{proof}
+  Omitted.
+\end{proof}
+
+If a homomorphism has nontrivial kernel (i.e., $\ker \phi \ne \set{e}$)
+then it is obviously non-injective. Furthermore, we get the following theorem:
+\begin{theorem}{}{nontrivial-kernel}
+  A homomorphism $f \from G \to H$ is injective if and only if $\ker f$ is trivial.
+\end{theorem}
+\begin{proof}
+  By contrapositive, if $\ker f$ is nontrivial then of course $f$ may not be injective.
+  Then, suppose $f$ has trivial kernel.
+  Let $a, b$ so that $f(a) = f(b)$.
+  Then, we have that $e = f(b)f(a)\inv$ and so $f(b a\inv) = e$.
+  However, then $a\inv = b\inv$ and so $a = b$.
+\end{proof}
+
+\begin{proposition}{Kernel Subgroup}{kernel-is-subgroup}
+  For a homomorphism $f \from G \to H$, $\ker f$ is a subgroup of $G$.
+\end{proposition}
+\begin{proof}
+  Let $f \from G \to H$.
+  Of course, $e \in \ker f$ by necessity, and if $f(a) = e$ then $f(a\inv) = f(a)\inv = e$
+  which means $a\inv \in \ker f$.
+  Now, take any two $a, b \in \ker f$.
+  Because $f(ab) = f(a)f(b) = e^{2} = e$, we have $ab \in \ker f$ and so it is closed.
+\end{proof}
+
+\begin{theorem}{Order of Element Under Isomorphism}{iso-order}
+  For an isomorphism $f \from G \to H$, for $g \in G$, $f$ preserves order.
+  That is,
+  \[ \ord(g) = \ord(f(g)). \]
+\end{theorem}
+\begin{proof}
+  Let $g \in G$ and $f \from G \to H$ be an isomorphism.
+  Suppose first that $\ord(g) = n < \infty$.
+  Then, we see that $f(g^{n}) = f(g)^{n} = e$ and so $\ord(f(g)) \mid n$ at the least.
+  Suppose that $\ord(f(g)) = k < n$. Then $e \ne f(g^{k}) = f(g)^{k} = e$
+  which is a contradiction. This is because $g^{k} \ne e$ and $f$ is injective.
+
+  If $\ord(g)$ is infinite, then suppose by way of contradiction that $\ord(f(g)) = n$ is finite.
+  Then, $e = f(e) \ne f(g^{n}) = f(g)^{n} = e$, which is the same contradiction as before.
+\end{proof}
+
+\begin{proposition}{Order of Element Under Homomorphism}{homo-order-div}
+  For a homomorphism $f \from G \to H$ and $g \in G$, $\ord(f(g)) \mid \ord(g)$.
+\end{proposition}
+\begin{proof}
+  The same argument as in Theorem~\ref{th:iso-order} is used, except one cannot use
+  the injectivity of $f$ to further narrow down to equality.
+\end{proof}
+
+\begin{example}{}{}
+  Find all homomorphisms from $U_{16} \to \ZZ_{5}$.
+
+  Only the trivial homomorphism $g \to 0$ works, by using Proposition~\ref{prop:homo-order-div}.
+\end{example}
+
+\begin{proposition}{}{im-generator-defines-hom}
+  Let $\phi \from G \to H$ be a homomorphism.
+  If $\angles{g} = G$, then $\im \phi$ is determined by $\phi(g)$.
+\end{proposition}
+\begin{proof}
+  Omitted, although not difficult.
+\end{proof}
+
+\subsection{Cosets}
+
+Define $aG = \set{ ag \mid g \in G }$.
+For instance, $5\ZZ = \set{ \ldots, -10, -5, 0, 5, 10, \ldots }$.
+
+\begin{definition}{}{cosets}
+  Given a subgroup $H \le G$, the \emph{cosets} of $H$ are the sets
+  \[ \set{ gH \mid g \in G }. \]
+  For nonabelian groups, the above are specifically the \emph{left cosets} of $H$.
+  The similarly defined \emph{right cosets} exist as well, although for abelian groups
+  they coincide and are simply called \emph{the cosets} of $H$.
+\end{definition}
+
+\begin{theorem}{}{cosets-equal-iff}
+  Two cosets $C = cH, D = dH$ are equal if and only if $d\inv c \in H$.
+\end{theorem}
+\begin{proof}
+  ($\implies$)
+  Suppose $C = D$ and $d\inv c \notin H$.
+  Then, there exist $h_{1},h_{2} \in H$ so $ch_{1} = dh_{2}$.
+  Thus, $d\inv c = h_{2}h_{1}\inv \in H$.
+
+  ($\impliedby$)
+  Now take $d\inv c \in H$, and so $d = ch$ for a specific $h \in H$.
+  Then, each $dh' \in dH$ must be $chh' \in cH$ and so $D \subset C$.
+  Since $d\inv c \in H$, we also know $c \inv d \in H$.
+  By the same logic as above, we can say $C \subset D$ and so they are equal.
+\end{proof}
+
+\begin{proposition}{}{cosets-same-size}
+  Every coset of a subgroup $H \le G$ has the same cardinality.
+\end{proposition}
+\begin{proof}
+  For any coset $aH$ there is the bijection $f \from H \to aH$ via $h \mapsto ah$.
+  Therefore, $\abs{aH} = \abs{H} = \abs{eH}$.
+\end{proof}
+
+\begin{proposition}{}{cosets-disjoint}
+  Given $H \le G$, any two distinct cosets of $H$ are disjoint.
+\end{proposition}
+\begin{proof}
+  Suppose not and two cosets $C = cH, D = dH$ are not disjoint but unequal.
+  Then, there must be elements so that $ch_{1} = dh_{2}$.
+  However, this means that $c = dh_{2}h_{1}\inv$.
+  Therefore $d\inv c \in H$, which is a contradiction as $C \ne D$.
+\end{proof}
+
+This is in fact enough to say that two cosets $C, D$ are either
+equal or entirely disjoint -\ this allows us to talk about cosets as an equivalance relation, and so use an arbitrary element as a ``representative'' for each coset.
+
+\begin{proposition}{}{cosets-cover}
+  The cosets of a subgroup $H \le G$ cover $G$, in that
+  \[ \bigcup_{g \in G} gH = G. \]
+\end{proposition}
+\begin{proof}
+  Note that $g \in gH$ since $e \in H$. Therefore, every $g \in G$ is within $\cup\ gH$.
+\end{proof}
+
+
+\begin{theorem}{Lagrange's Theorem}{lagrange}
+  For $H \le G$, the order of $H$ divides the order of $G$ provided $G$ is finite.
+\end{theorem}
+\begin{proof}
+  Let $H \le G$.
+  We know the cosets of $H$ cover $G$ by Proposition~\ref{prop:cosets-cover},
+  all have the size ($\abs{H}$) by Proposition~\ref{prop:cosets-same-size}
+  and are disjoint (Prop.~\ref{prop:cosets-disjoint}).
+  Thus, we see that if there are $k$ distinct cosets, then $k\abs{H} = \abs{G}$.
+\end{proof}
+
+\begin{definition}{Index of a Subgroup}{index-subgroup}
+  For $H \le G$, the \emph{index} of $H$ is denoted
+  \[ [G : H] = \text{ number of cosets of } H \text{ with respect to } G. \]
+\end{definition}
+Note that this is unambiguous since the number of left cosets is equal
+to the number of right cosets.
+So,~\nameref{th:lagrange} can be rephrased for infinite groups as $\abs{G} = \abs{H}[G : H]$.
+
+\begin{proposition}{}{}
+  Let $G$ be a group of $pq$ elements.
+  Then there exists $H \le G$ so that $\abs{H} = p$.
+\end{proposition}
+\begin{proof}
+  Let $g \ne e$ be an element of $G$.
+  If $\ord(g) = p$ then we are done.
+  If $\ord(g) = pq$, then $\ord(g^{q}) = p$.
+
+  Suppose all possible $pq - 1$ non-identity elements of $G$ have order $q$ then.
+  Then, for each $g_{i} \in G$, there is $\abs{g_{i}}$ with $q$ elements.
+  Pick two $g_{i},g_{j}$ so that they are different cyclic generators.
+  This means that $\angles{g_{i}} \cap \angles{g_{j}} = \set{e}$.
+  We may continue this, taking away $q - 1$ possibilities each time.
+  However, we cannot exhaust $G$ this way since $(q - 1) \nmid pq$.
+  So, not all elements are of order $q$ and there must be one of order $p$.
+\end{proof}
+
+\subsection{Quotient Groups}
+
+We might want to take the cosets of $H \le G$ and find some group structure that makes sense of \emph{these} collections.
+Taking some subgroup $H$ of $G$, we can ``divide'' $G$ by $H$ to look at the cosets themselves as elements.
+We motivate quotient groups this way.
+
+\begin{definition}{Set Product}{set-product}
+  Let $S, T \subset G$. Then the product $S \cdot T = \set{ st \mid (s, t) \in S \times T }$.
+\end{definition}
+
+\begin{proposition}{Coset Products}{coset-product}
+  Let $A, B$ be cosets of $H \le G$, with $G$ abelian.
+  If $a, b$ are representatives of $A$ and $B$, then $aH \cdot bH = abH$.
+\end{proposition}
+\begin{proof}
+  Let $a, b$ be representatives as usual.
+  Then,
+  \begin{align*}
+    aH \cdot bH &= \set{ ah bh' \mid (h, h') \in H^{2} }\\
+    &= \set{ ab hh' \mid (h, h') \in H^{2} }\\
+    &= \set{ ab h \mid h \in H }
+  \end{align*}
+  and so $aH \cdot bH = abH$.
+\end{proof}
+
+
+\end{document}
